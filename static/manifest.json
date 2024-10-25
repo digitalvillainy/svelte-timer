@@ -1,7 +1,7 @@
 {
   "short_name": "retech-app",
   "name": "CELEST retech boilerplate app",
-  "start_url": "https://sroehrl.github.io/svelte-flowbite-boilerplate/",
+  "start_url": "localhost:5173",
   "icons": [
     {
       "src": "icon-512x512.png",
