@@ -5,7 +5,7 @@ import {modalStore} from "$lib/stores/modal";
 
 <Modal  bind:open={$modalStore.open} size="{$modalStore.size}" outsideclose="{$modalStore.outsideclose}" title="{$modalStore.title}" autoclose="{$modalStore.autoclose}">
     {#if $modalStore.component}
-        <svelte:component this={$modalStore.component} />
+        <svelte:component this={$modalStore.component} {...$modalStore.props}/>
     {:else}
         {$modalStore.content}
     {/if}

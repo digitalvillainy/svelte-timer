@@ -4,6 +4,7 @@ type ModalConfig = {
     title: string
     content?: string
     component?: any,
+    props?: any,
     autoclose?: boolean,
     outsideclose?: boolean,
     size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
@@ -12,6 +13,7 @@ export const modalStore = writable({
     open: false,
     title: "",
     content:'',
+    props: {},
     component: null,
     autoclose: false,
     outsideclose: false,

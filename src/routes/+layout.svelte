@@ -3,6 +3,15 @@
     import {Button, Footer, Navbar, NavBrand, NavHamburger, NavLi, NavUl} from "flowbite-svelte";
     import ReusableModal from "$lib/components/ReusableModal.svelte";
     import {ClockOutline, PauseSolid, PlaySolid, PlusSolid} from "flowbite-svelte-icons";
+    import {modalStore} from "$lib/stores/modal";
+
+    const createTask = (): void => {
+        $modalStore.open = true
+        $modalStore.title = "Create Task"
+        if($modalStore.props) {
+            $modalStore.props = {}
+        }
+    }
 </script>
 <div>
     <Navbar color="transparent" class="z-10 w-full" let:hidden let:toggle>
@@ -22,9 +31,8 @@
                     Completed
                 </Button>
             </NavLi>
-            <!--TODO: Add new task-->
-            <Button color="red" class="text-white" alternate="">
-                <PlusSolid class="w-6 h-6"/>
+            <Button color="red" class="text-white" alternate="" on:click={createTask}>
+                <PlusSolid class="w-4 h-4"/>
             </Button>
         </NavUl>
     </Navbar>
