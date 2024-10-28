@@ -9,7 +9,11 @@
         rows: 4,
     };
 
-    export let title: string, description: string, estimated: string;
+    let title: string = '';
+    let description: string = '';
+    let estimated: string = '';
+    let id: number = 0;
+    let current: string = '';
 
 </script>
 <form>

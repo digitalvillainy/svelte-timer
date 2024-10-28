@@ -4,6 +4,7 @@
     import {modalStore} from "$lib/stores/modal.ts";
 
     export let title: string, description: string, estimated: number, current: number;
+    export let id: number = 0;
     let elapsed = "00:00:00";
 
     const editModal = (): void => {
