@@ -1,18 +1,4 @@
-import {writable} from "svelte/store";
+import {type Writable, writable} from "svelte/store";
+import autoFillStore from "$lib/utils/autoFillStore";
 
-export type Todo = {
-    id: number,
-    title: string,
-    description: string,
-    estimated: number,
-    completed?: boolean
-}
-
-export const todos = writable({
-    id: 0,
-    title: "",
-    description: "",
-    estimated: 0,
-    completed: false,
-
-})
+export const todosStore: Writable<any[]> = writable([], () => autoFillStore(todosStore, '/todos'));

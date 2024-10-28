@@ -2,6 +2,7 @@
     import ToDoCard from "$lib/components/ToDoCard.svelte";
     import {modalStore} from "$lib/stores/modal";
     import EditToDo from "$lib/components/EditToDo.svelte";
+    import {todosStore} from "$lib/stores/todo";
 
     $modalStore.registerConfig({
         title: "Edit To Do Card",
@@ -9,20 +10,8 @@
         outsideclose: true
     })
 
-    let todos: {
-        title: string,
-        description: string,
-        estimated: string,
-        current: string
-    }[] = [
-        {
-            id: 1,
-            title: "Hello World 1!",
-            description: "Hello World!",
-            estimated: "Hello World!",
-            current: "Hello World!"
-        }
-    ]
+    let todos = $todosStore;
+    console.log(todos);
 </script>
 
 <section class="w-5/12 mx-auto">
