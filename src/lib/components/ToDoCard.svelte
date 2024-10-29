@@ -5,7 +5,11 @@
 
     export let title: string, description: string, estimated: number, current: number;
     export let id: number = 0;
-    let elapsed = "00:00:00";
+    export let elapsed = "00:00:00";
+    export let completed = false;
+    export let created_at = null;
+    export let updated_at = null;
+    export let value = null;
 
     const editModal = (): void => {
         $modalStore.open = true;

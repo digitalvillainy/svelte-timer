@@ -1,6 +1,6 @@
 <script lang="ts">
     import {Button, Input, Label, Textarea} from "flowbite-svelte";
-    import {todosStore} from "$lib/stores/todo";
+    import {todosStore, type Todo} from "$lib/stores/todo";
     import {modalStore} from "$lib/stores/modal";
 
     let textAreaProps = {
@@ -18,7 +18,7 @@
     export let current: string = '0';
 
     const submit = (): void => {
-        const todo = {
+        const todo: Todo = {
             id,
             title,
             description,
