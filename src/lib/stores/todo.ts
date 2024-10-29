@@ -1,5 +1,6 @@
-import {type Writable, writable} from "svelte/store";
+import {get, type Writable, writable} from "svelte/store";
 import autoFillStore from "$lib/utils/autoFillStore";
+import * as api from "$lib/api";
 
 type Todo = {
     id: number
@@ -27,7 +28,13 @@ const createTodoStore = (): TodoStore => {
     );
 
     const addTodo = (todo: Todo): void => {
-        update((todos) => [...todos, todo]);
+        update((todos: Todo[]) => [...todos, todo]);
+
+        const todos: Todo[] = get(todosStore).filter((todo: Todo): boolean => todo.id === 0);
+
+        api.post('/todos', todos)
+            .then((res) => console.log('success'))
+            .catch((err) => console.error(err));
     };
 
     const updateTodo = (id: number, updatedTodo: Partial<Todo>): void => {

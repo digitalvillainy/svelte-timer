@@ -15,21 +15,23 @@
     export let description: string = '';
     export let estimated: string = '';
     export let id: number = 0;
-    export let current: string = '';
+    export let current: string = '0';
 
     const submit = (): void => {
-      if(title.length > 0 && description.length > 0 && estimated.length > 0) {
         const todo = {
-          id,
-          title,
-          description,
-          estimated,
-          current,
-          elapsed: '00:00:00'
+            id,
+            title,
+            description,
+            estimated,
+            current,
+            completed: false
         };
-        todosStore.addTodo(todo);
+        if (title.length > 0 && description.length > 0 && estimated.length > 0) {
+            todosStore.addTodo(todo);
+        } else {
+            todosStore.updateTodo(todo);
+        }
         $modalStore.open = false;
-      }
     };
 </script>
 <form>
