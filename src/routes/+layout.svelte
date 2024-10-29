@@ -14,7 +14,7 @@
     };
 </script>
 <div>
-    <Navbar color="transparent" class="z-10 w-full" let:hidden let:toggle>
+    <Navbar class="fixed top-0 z-10 w-full bg-black" let:hidden let:toggle>
         <NavBrand href="/">
             <ClockOutline class="w-12 h-12 fill-red-600 mr-4"/>
             <span class="text-white text-3xl font-bold">Svelte Time</span>
@@ -36,8 +36,8 @@
             </Button>
         </NavUl>
     </Navbar>
-    <slot/>
-    <Footer class="fixed inset-x-0 bottom-0 pb-2">
+    <slot />
+    <Footer class="fixed inset-x-0 bottom-0 pb-2 bg-black">
         <div class="w-5/12 h-16 rounded mx-auto bg-red-600 p-1 flex flex-row justify-between place-items-center">
             <div class="w-32 flex flex-row justify-between py-1 pr-4 border-r-2 border-slate-600">
                 <svg class="w-10 h-10 text-white hover:text-blue-200 hover:shadow-black dark:text-white self-center cursor-pointer"

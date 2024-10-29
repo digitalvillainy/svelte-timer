@@ -17,7 +17,7 @@
     export let id: number = 0;
     export let current: string = '0';
 
-    const submit = (id: number, title: string, description: string, estimated: string): void => {
+    const submit = (): void => {
 
         const todo: Todo = {
             id,
@@ -38,7 +38,7 @@
         $modalStore.open = false;
     };
 </script>
-<form on:submit|preventDefault={submit(id, title, description, estimated)}>
+<form on:submit|preventDefault={submit}>
     <div class="mb-6">
         <Label for="title" class="block mb-2">Title</Label>
         <Input id="title" name="title" placeholder="Title" required bind:value={title}/>
