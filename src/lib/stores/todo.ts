@@ -14,10 +14,9 @@ type Todo = {
 
 type TodoStore = Writable<Todo[]> & {
     addTodo: (todo: Todo) => void
-    updateTodo: (id: number, updatedTodo: Partial<Todo>) => void
+    updateTodo: (id: number, updatedTodo: Partial<Todo>) => void,
     removeTodo: (id: number) => void,
-    updateTodos: (todos: Todo[]) => void,
-    completeTodo: (id: number) => void,
+    completeTodo: (id: number, todo: Todo) => Promise<void>,
     getCompleted: () => Todo[] | undefined
 }
 
@@ -47,7 +46,7 @@ const createTodoStore = (): TodoStore => {
             )
         );
 
-        await api.put('/todos/' + id, updatedTodo)
+        await api.put('/todos', updatedTodo)
             .then((res) => console.log(res))
             .catch((err) => console.error(err));
     };
@@ -61,15 +60,14 @@ const createTodoStore = (): TodoStore => {
             .catch((err) => console.error(err));
     };
 
-    const completeTodo = async (id: number): Promise<void> => {
+    const completeTodo = async (id: number, todo: Todo): Promise<void> => {
         update((todos: Todo[]) =>
             todos.map((todo: Todo) =>
                 todo.id === id ? {...todo, completed: !todo.completed} : todo
             )
         );
 
-        const updated: Todo[] = get(todosStore).filter((todo: Todo): boolean => todo.id === id);
-        await updateTodo(id, updated[0]);
+        await updateTodo(id, todo);
     };
 
     return {
@@ -80,7 +78,6 @@ const createTodoStore = (): TodoStore => {
         updateTodo,
         removeTodo,
         completeTodo,
-        updateTodos: (todos: Todo[]) => set(todos),
         getCompleted: () => get(todosStore).filter((todo: Todo): boolean => todo.completed)
     }
 };

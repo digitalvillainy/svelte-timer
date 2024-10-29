@@ -25,6 +25,17 @@
     const deleteTodo = (id: number): void => {
         todosStore.removeTodo(id);
     };
+
+    const completeTodo = (id: number): void => {
+        todosStore.completeTodo(id, {
+            id,
+            title,
+            description,
+            estimated,
+            current,
+            completed: !completed
+        });
+    };
 </script>
 <div class="flex flex-row justify-between w-full bg-slate-800 pr-2 border-2 border-gray-500 rounded my-4">
     <div class="text-white flex flex-col border-gray-500 border-l-8 py-2 pl-2">
@@ -44,7 +55,8 @@
                              on:click={() => editModal()}/>
             </li>
             <li>
-                <CheckCircleOutline class="size-3 hover:text-green-300 cursor-pointer"/>
+                <CheckCircleOutline class="size-3 hover:text-green-300 cursor-pointer"
+                                    on:click={() => completeTodo(id)}/>
             </li>
             <li>
                 <CloseOutline class="size-2 hover:text-red-300 cursor-pointer"

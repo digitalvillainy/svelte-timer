@@ -1,0 +1,1 @@
+<h1 class="text-white text-3xl font-bold w-full text-center">Completed</h1>
