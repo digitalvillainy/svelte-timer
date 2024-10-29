@@ -10,7 +10,7 @@
         outsideclose: true
     })
 
-    $: todos = $todosStore;
+    $: todos = $todosStore.filter((todo: Todo): boolean => !todo.completed);
 </script>
 
 <section class="w-5/12 mx-auto">

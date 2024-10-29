@@ -44,19 +44,24 @@
                 {title}
             </h4>
         </div>
-        <p class="w-8/12">
+        <p>
             {description}
         </p>
     </div>
     <div class="text-white flex flex-col py-2 pr-2">
         <ul class="flex flex-row place-self-end space-x-2 mb-3">
             <li>
-                <EditOutline class="size-3 hover:text-blue-300 cursor-pointer"
+                <EditOutline class="size-3 hover:text-blue-400 cursor-pointer"
                              on:click={() => editModal()}/>
             </li>
             <li>
-                <CheckCircleOutline class="size-3 hover:text-green-300 cursor-pointer"
-                                    on:click={() => completeTodo(id)}/>
+                <CheckCircleOutline
+                        class={
+                        completed ?
+                        "text-green-300 size-3 hover:text-green-400 cursor-pointer"
+                        : "text-gray-300 size-3 hover:text-green-400 cursor-pointer"
+                        }
+                        on:click={() => completeTodo(id)}/>
             </li>
             <li>
                 <CloseOutline class="size-2 hover:text-red-300 cursor-pointer"
