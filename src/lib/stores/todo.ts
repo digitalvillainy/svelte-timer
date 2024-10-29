@@ -27,13 +27,13 @@ const createTodoStore = (): TodoStore => {
         () => autoFillStore(todosStore, '/todos')
     );
 
-    const addTodo = (todo: Todo): void => {
+    const addTodo = async (todo: Todo): Promise<void> => {
         update((todos: Todo[]) => [...todos, todo]);
 
         const todos: Todo[] = get(todosStore).filter((todo: Todo): boolean => todo.id === 0);
 
-        api.post('/todos', todos)
-            .then((res) => console.log('success'))
+        await api.post('/todos', todos)
+            .then((res) => console.log(res))
             .catch((err) => console.error(err));
     };
 
@@ -45,8 +45,13 @@ const createTodoStore = (): TodoStore => {
         );
     };
 
-    const removeTodo = (id: number): void => {
-        update((todos) => todos.filter((todo) => todo.id !== id));
+    const removeTodo = async (id: number): Promise<void> => {
+        update((todos: Todo[]) => todos.filter((todo: Todo): boolean => todo.id !== id));
+
+        const updated: Todo[] = get(todosStore).filter((todo: Todo): boolean => todo.id !== id);
+        await api.retire('/todos/' + id)
+            .then(() => update((todos: Todo[]) => [...todos, ...updated]))
+            .catch((err) => console.error(err));
     };
 
     return {

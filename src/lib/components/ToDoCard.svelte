@@ -2,6 +2,7 @@
     //Props declaration
     import {CheckCircleOutline, CloseOutline, EditOutline} from "flowbite-svelte-icons";
     import {modalStore} from "$lib/stores/modal.ts";
+    import {todosStore} from "$lib/stores/todo";
 
     export let title: string, description: string, estimated: number, current: number;
     export let id: number = 0;
@@ -19,7 +20,11 @@
             estimated,
             current
         }
-    }
+    };
+
+    const deleteTodo = (id: number): void => {
+        todosStore.removeTodo(id);
+    };
 </script>
 <div class="flex flex-row justify-between w-full bg-slate-800 pr-2 border-2 border-gray-500 rounded my-4">
     <div class="text-white flex flex-col border-gray-500 border-l-8 py-2 pl-2">
@@ -42,7 +47,8 @@
                 <CheckCircleOutline class="size-3 hover:text-green-300 cursor-pointer"/>
             </li>
             <li>
-                <CloseOutline class="size-2 hover:text-red-300 cursor-pointer"/>
+                <CloseOutline class="size-2 hover:text-red-300 cursor-pointer"
+                              on:click={() => deleteTodo(id)}/>
             </li>
         </ul>
         <span>Estimated Time: {estimated}</span>
