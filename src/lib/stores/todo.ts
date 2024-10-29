@@ -37,6 +37,7 @@ const createTodoStore = (): TodoStore => {
             .catch((err) => console.error(err));
     };
 
+    //TODO: set up updated TODO
     const updateTodo = (id: number, updatedTodo: Partial<Todo>): void => {
         update((todos: Todo[]) =>
             todos.map((todo: Todo) =>
@@ -52,6 +53,15 @@ const createTodoStore = (): TodoStore => {
         await api.retire('/todos/' + id)
             .then(() => update((todos: Todo[]) => [...todos, ...updated]))
             .catch((err) => console.error(err));
+    };
+
+    //TODO: set up completed TODO
+    const completeTodo = async (id: number): Promise<void> => {
+        update((todos: Todo[]) =>
+            todos.map((todo: Todo) =>
+                todo.id === id ? {...todo, completed: !todo.completed} : todo
+            )
+        );
     };
 
     return {
