@@ -17,7 +17,8 @@
     export let id: number = 0;
     export let current: string = '0';
 
-    const submit = (): void => {
+    const submit = (id: number, title: string, description: string, estimated: string): void => {
+
         const todo: Todo = {
             id,
             title,
@@ -26,15 +27,18 @@
             current,
             completed: false
         };
+
+
         if (title.length > 0 && description.length > 0 && estimated.length > 0) {
             todosStore.addTodo(todo);
         } else {
-            todosStore.updateTodo(todo);
+            todosStore.updateTodo(id, todo);
         }
+
         $modalStore.open = false;
     };
 </script>
-<form>
+<form on:submit|preventDefault={submit(id, title, description, estimated)}>
     <div class="mb-6">
         <Label for="title" class="block mb-2">Title</Label>
         <Input id="title" name="title" placeholder="Title" required bind:value={title}/>
@@ -46,7 +50,7 @@
         <Label for="title" class="block mb-2">Time To complete</Label>
         <Input id="number" name="estimated" placeholder="Estimated Time to Complete" required bind:value={estimated}/>
     </div>
-    <Button type="submit" on:click={submit}>
+    <Button type="submit">
         Submit
     </Button>
 </form>
