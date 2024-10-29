@@ -1,5 +1,4 @@
 <script lang="ts">
-    //Props declaration
     import {CheckCircleOutline, CloseOutline, EditOutline} from "flowbite-svelte-icons";
     import {modalStore} from "$lib/stores/modal.ts";
     import {todosStore} from "$lib/stores/todo";
@@ -23,11 +22,11 @@
         }
     };
 
-    const deleteTodo = (id: number): void => {
+    const deleteTodo = (): void => {
         todosStore.removeTodo(id);
     };
 
-    const completeTodo = (id: number): void => {
+    const completeTodo = (): void => {
         todosStore.completeTodo(id, {
             id,
             title,
@@ -37,9 +36,21 @@
             completed: !completed
         });
     };
+
+    let timerStarted: boolean = false;
+
+    const selectedTodo = (): void => {
+        timerStarted = !timerStarted;
+        console.log(timerStarted);
+    };
 </script>
 <div class="flex flex-row justify-between w-full bg-slate-800 pr-2 border-2 border-gray-500 rounded my-4">
-    <div class="text-white flex flex-col border-gray-500 border-l-8 py-2 pl-2">
+    <div class={
+            timerStarted
+            ? 'text-green-300 flex flex-col border-green-500 border-l-8 py-2 pl-2 cursor-pointer'
+            : 'text-white flex flex-col border-gray-500 border-l-8 py-2 pl-2 cursor-pointer'
+        }
+         on:click={selectedTodo}>
         <div class="flex flex-row justify-between w-full">
             <h4 class="text-2xl mb-3">
                 {title}
@@ -53,7 +64,7 @@
         <ul class="flex flex-row place-self-end space-x-2 mb-3">
             <li>
                 <EditOutline class="size-3 hover:text-blue-400 cursor-pointer"
-                             on:click={() => editModal()}/>
+                             on:click={() => editModal}/>
             </li>
             <li>
                 <CheckCircleOutline
@@ -62,15 +73,17 @@
                         "text-green-300 size-3 hover:text-green-400 cursor-pointer"
                         : "text-gray-300 size-3 hover:text-green-400 cursor-pointer"
                         }
-                        on:click={() => completeTodo(id)}/>
+                        on:click={() => completeTodo}/>
             </li>
             <li>
                 <CloseOutline class="size-2 hover:text-red-300 cursor-pointer"
-                              on:click={() => deleteTodo(id)}/>
+                              on:click={() => deleteTodo}/>
             </li>
         </ul>
-        <span>Estimated Time: {estimated}</span>
-        <span>Current Time: {current}</span>
-        <span>Elapsed Time: {elapsed}</span>
+        <div class="flex flex-col">
+            <span>Estimated Time: {estimated}</span>
+            <span>Current Time: {current}</span>
+            <span>Elapsed Time: {elapsed}</span>
+        </div>
     </div>
 </div>
