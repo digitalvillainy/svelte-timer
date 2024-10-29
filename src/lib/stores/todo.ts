@@ -15,7 +15,10 @@ type Todo = {
 type TodoStore = Writable<Todo[]> & {
     addTodo: (todo: Todo) => void
     updateTodo: (id: number, updatedTodo: Partial<Todo>) => void
-    removeTodo: (id: number) => void
+    removeTodo: (id: number) => void,
+    updateTodos: (todos: Todo[]) => void,
+    completeTodo: (id: number) => void,
+    getCompleted: () => Todo[] | undefined
 }
 
 const createTodoStore = (): TodoStore => {
@@ -37,13 +40,16 @@ const createTodoStore = (): TodoStore => {
             .catch((err) => console.error(err));
     };
 
-    //TODO: set up updated TODO
-    const updateTodo = (id: number, updatedTodo: Partial<Todo>): void => {
+    const updateTodo = async (id: number, updatedTodo: Partial<Todo>): Promise<void> => {
         update((todos: Todo[]) =>
             todos.map((todo: Todo) =>
                 todo.id === id ? {...todo, ...updatedTodo} : todo
             )
         );
+
+        await api.put('/todos/' + id, updatedTodo)
+            .then((res) => console.log(res))
+            .catch((err) => console.error(err));
     };
 
     const removeTodo = async (id: number): Promise<void> => {
@@ -55,13 +61,15 @@ const createTodoStore = (): TodoStore => {
             .catch((err) => console.error(err));
     };
 
-    //TODO: set up completed TODO
     const completeTodo = async (id: number): Promise<void> => {
         update((todos: Todo[]) =>
             todos.map((todo: Todo) =>
                 todo.id === id ? {...todo, completed: !todo.completed} : todo
             )
         );
+
+        const updated: Todo[] = get(todosStore).filter((todo: Todo): boolean => todo.id === id);
+        await updateTodo(id, updated[0]);
     };
 
     return {
@@ -70,7 +78,10 @@ const createTodoStore = (): TodoStore => {
         update,
         addTodo,
         updateTodo,
-        removeTodo
+        removeTodo,
+        completeTodo,
+        updateTodos: (todos: Todo[]) => set(todos),
+        getCompleted: () => get(todosStore).filter((todo: Todo): boolean => todo.completed)
     }
 };
 
