@@ -10,8 +10,7 @@
         outsideclose: true
     })
 
-    let todos = $todosStore;
-    console.log(todos);
+    $: todos = $todosStore;
 </script>
 
 <section class="w-5/12 mx-auto">

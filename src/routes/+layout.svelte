@@ -4,14 +4,15 @@
     import ReusableModal from "$lib/components/ReusableModal.svelte";
     import {ClockOutline, PauseSolid, PlaySolid, PlusSolid} from "flowbite-svelte-icons";
     import {modalStore} from "$lib/stores/modal";
+    import {todosStore} from "$lib/stores/todo";
 
     const createTask = (): void => {
-        $modalStore.open = true
-        $modalStore.title = "Create Task"
+        $modalStore.open = true;
+        $modalStore.title = "Create Task";
         if($modalStore.props) {
-            $modalStore.props = {}
+            $modalStore.props = {};
         }
-    }
+    };
 </script>
 <div>
     <Navbar color="transparent" class="z-10 w-full" let:hidden let:toggle>

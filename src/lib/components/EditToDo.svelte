@@ -1,5 +1,7 @@
 <script lang="ts">
     import {Button, Input, Label, Textarea} from "flowbite-svelte";
+    import {todosStore} from "$lib/stores/todo";
+    import {modalStore} from "$lib/stores/modal";
 
     let textAreaProps = {
         id: "description",
@@ -9,12 +11,26 @@
         rows: 4,
     };
 
-    let title: string = '';
-    let description: string = '';
-    let estimated: string = '';
-    let id: number = 0;
-    let current: string = '';
+    export let title: string = '';
+    export let description: string = '';
+    export let estimated: string = '';
+    export let id: number = 0;
+    export let current: string = '';
 
+    const submit = (): void => {
+      if(title.length > 0 && description.length > 0 && estimated.length > 0) {
+        const todo = {
+          id,
+          title,
+          description,
+          estimated,
+          current,
+          elapsed: '00:00:00'
+        };
+        todosStore.addTodo(todo);
+        $modalStore.open = false;
+      }
+    };
 </script>
 <form>
     <div class="mb-6">
@@ -28,7 +44,7 @@
         <Label for="title" class="block mb-2">Time To complete</Label>
         <Input id="number" name="estimated" placeholder="Estimated Time to Complete" required bind:value={estimated}/>
     </div>
-    <Button type="submit">
+    <Button type="submit" on:click={submit}>
         Submit
     </Button>
 </form>
