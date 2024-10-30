@@ -41,7 +41,7 @@
 
     const selectedTodo = (): void => {
         timerStarted = !timerStarted;
-        console.log(timerStarted);
+        //TODO: Add timer start
     };
 </script>
 <div class="flex flex-row justify-between w-full bg-slate-800 pr-2 border-2 border-gray-500 rounded my-4">

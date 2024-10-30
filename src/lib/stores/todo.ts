@@ -7,8 +7,8 @@ type Todo = {
     title: string
     description: string
     completed: boolean
-    estimated: number
-    current: number
+    estimated: string
+    current: string
     elapsed: string
 }
 
@@ -18,6 +18,7 @@ type TodoStore = Writable<Todo[]> & {
     removeTodo: (id: number) => void,
     completeTodo: (id: number, todo: Todo) => Promise<void>,
     getCompleted: () => Todo[] | undefined
+    startTimer: (todo: Todo) => void
 }
 
 const createTodoStore = (): TodoStore => {
@@ -70,6 +71,17 @@ const createTodoStore = (): TodoStore => {
         await updateTodo(id, todo);
     };
 
+    const startTimer = (todo: Todo) => {
+        setInterval(() => {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, "0");
+            const minutes = now.getMinutes().toString().padStart(2, "0");
+            const seconds = now.getSeconds().toString().padStart(2, "0");
+
+            todo.current = `${hours}:${minutes}:${seconds}`;
+        }, 1000);
+    }
+
     return {
         subscribe,
         set,
@@ -78,6 +90,7 @@ const createTodoStore = (): TodoStore => {
         updateTodo,
         removeTodo,
         completeTodo,
+        startTimer,
         getCompleted: () => get(todosStore).filter((todo: Todo): boolean => todo.completed)
     }
 };
