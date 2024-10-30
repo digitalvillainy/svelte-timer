@@ -2,11 +2,9 @@
     import {CheckCircleOutline, CloseOutline, EditOutline} from "flowbite-svelte-icons";
     import {modalStore} from "$lib/stores/modal.ts";
     import {todosStore} from "$lib/stores/todo";
-    import {startTimer, timerStore} from "$lib/stores/timer";
 
-    export let title: string, description: string, estimated: number, current: number;
+    export let title: string, description: string;
     export let id: number = 0;
-    export let elapsed = "00:00:00";
     export let completed = false;
     export let created_at = null;
     export let updated_at = null;
@@ -17,9 +15,7 @@
         $modalStore.props = {
             id,
             title,
-            description,
-            estimated,
-            current
+            description
         }
     };
 
@@ -32,37 +28,20 @@
             id,
             title,
             description,
-            estimated,
-            current,
             completed: !completed
-        });
-    };
-
-    let timerStarted: boolean = false;
-
-    const selectedTodo = (id: number): void => {
-        $timerStore.currentId = id;
-        startTimer({
-            id,
-            title,
-            description,
-            estimated,
-            current,
-            completed
         });
     };
 </script>
 <div class={
-            id === $timerStore.currentId
+            completed
             ? 'flex flex-row justify-between w-full bg-green-900 pr-2 border-2 border-green-500 rounded my-4'
             : 'flex flex-row justify-between w-full bg-slate-800 pr-2 border-2 border-gray-500 rounded my-4'
             }>
     <div class={
-            id === $timerStore.currentId
+            completed
             ? 'text-green-300 flex flex-col border-green-500 border-l-8 py-2 pl-2 cursor-pointer'
             : 'text-white flex flex-col border-gray-500 border-l-8 py-2 pl-2 cursor-pointer'
-        }
-         on:click={selectedTodo(id)}>
+            }>
         <div class="flex flex-row justify-between w-full">
             <h4 class="text-2xl mb-3">
                 {title}
@@ -76,7 +55,7 @@
         <ul class="flex flex-row place-self-end space-x-2 mb-3">
             <li>
                 <EditOutline class="size-3 hover:text-blue-400 cursor-pointer"
-                             on:click={() => editModal}/>
+                             on:click={editModal}/>
             </li>
             <li>
                 <CheckCircleOutline
@@ -85,17 +64,12 @@
                         "text-green-300 size-3 hover:text-green-400 cursor-pointer"
                         : "text-gray-300 size-3 hover:text-green-400 cursor-pointer"
                         }
-                        on:click={() => completeTodo}/>
+                        on:click={completeTodo}/>
             </li>
             <li>
                 <CloseOutline class="size-2 hover:text-red-300 cursor-pointer"
-                              on:click={() => deleteTodo}/>
+                              on:click={deleteTodo}/>
             </li>
         </ul>
-        <div class="flex flex-col">
-            <span>Estimated Time: {estimated}</span>
-            <span>Current Time: {current}</span>
-            <span>Elapsed Time: {elapsed}</span>
-        </div>
     </div>
 </div>

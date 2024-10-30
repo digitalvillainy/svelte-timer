@@ -14,7 +14,7 @@
 </script>
 
 <section class="w-5/12 mx-auto mt-24 pb-16">
-    {#each todos as {...rest}, index (rest.id)}
+    {#each todos as {...rest}, index (rest.id ?? index)}
         <ToDoCard {...rest}/>
     {/each}
 </section>

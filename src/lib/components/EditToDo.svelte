@@ -13,9 +13,7 @@
 
     export let title: string = '';
     export let description: string = '';
-    export let estimated: string = '';
     export let id: number = 0;
-    export let current: string = '0';
 
     const submit = (): void => {
 
@@ -23,13 +21,10 @@
             id,
             title,
             description,
-            estimated,
-            current,
             completed: false
         };
 
-
-        if (title.length > 0 && description.length > 0 && estimated.length > 0) {
+        if (title.length === 0 && description.length === 0) {
             todosStore.addTodo(todo);
         } else {
             todosStore.updateTodo(id, todo);
@@ -45,10 +40,6 @@
     </div>
     <div class="mb-6">
         <Textarea {...textAreaProps} bind:value={description}/>
-    </div>
-    <div class="mb-6">
-        <Label for="title" class="block mb-2">Time To complete</Label>
-        <Input id="number" name="estimated" placeholder="Estimated Time to Complete" required bind:value={estimated}/>
     </div>
     <Button type="submit">
         Submit

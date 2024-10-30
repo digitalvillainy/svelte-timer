@@ -7,9 +7,6 @@ export type Todo = {
     title: string
     description: string
     completed: boolean
-    estimated: string
-    current: string
-    elapsed: string
 }
 
 type TodoStore = Writable<Todo[]> & {
@@ -33,7 +30,6 @@ const createTodoStore = (): TodoStore => {
         update((todos: Todo[]) => [...todos, todo]);
 
         const todos: Todo[] = get(todosStore).filter((todo: Todo): boolean => todo.id === 0);
-
         await api.post('/todos', todos)
             .then((res) => console.log(res))
             .catch((err) => console.error(err));
