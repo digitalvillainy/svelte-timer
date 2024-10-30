@@ -2,6 +2,7 @@
     import {CheckCircleOutline, CloseOutline, EditOutline} from "flowbite-svelte-icons";
     import {modalStore} from "$lib/stores/modal.ts";
     import {todosStore} from "$lib/stores/todo";
+    import {startTimer, timerStore} from "$lib/stores/timer";
 
     export let title: string, description: string, estimated: number, current: number;
     export let id: number = 0;
@@ -39,18 +40,29 @@
 
     let timerStarted: boolean = false;
 
-    const selectedTodo = (): void => {
-        timerStarted = !timerStarted;
-        //TODO: Add timer start
+    const selectedTodo = (id: number): void => {
+        $timerStore.currentId = id;
+        startTimer({
+            id,
+            title,
+            description,
+            estimated,
+            current,
+            completed
+        });
     };
 </script>
-<div class="flex flex-row justify-between w-full bg-slate-800 pr-2 border-2 border-gray-500 rounded my-4">
+<div class={
+            id === $timerStore.currentId
+            ? 'flex flex-row justify-between w-full bg-green-900 pr-2 border-2 border-green-500 rounded my-4'
+            : 'flex flex-row justify-between w-full bg-slate-800 pr-2 border-2 border-gray-500 rounded my-4'
+            }>
     <div class={
-            timerStarted
+            id === $timerStore.currentId
             ? 'text-green-300 flex flex-col border-green-500 border-l-8 py-2 pl-2 cursor-pointer'
             : 'text-white flex flex-col border-gray-500 border-l-8 py-2 pl-2 cursor-pointer'
         }
-         on:click={selectedTodo}>
+         on:click={selectedTodo(id)}>
         <div class="flex flex-row justify-between w-full">
             <h4 class="text-2xl mb-3">
                 {title}

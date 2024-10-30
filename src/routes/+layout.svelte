@@ -4,14 +4,19 @@
     import ReusableModal from "$lib/components/ReusableModal.svelte";
     import {ClockOutline, PauseSolid, PlaySolid, PlusSolid} from "flowbite-svelte-icons";
     import {modalStore} from "$lib/stores/modal";
+    import {startTimer, timerStore} from "$lib/stores/timer";
 
     const createTask = (): void => {
         $modalStore.open = true;
         $modalStore.title = "Create Task";
-        if($modalStore.props) {
+        if ($modalStore.props) {
             $modalStore.props = {};
         }
     };
+
+    $: timerTitle = $timerStore.currentTitle;
+    $: timerDisplay = $timerStore.timer;
+
 </script>
 <div>
     <Navbar class="fixed top-0 z-10 w-full bg-black" let:hidden let:toggle>
@@ -36,7 +41,7 @@
             </Button>
         </NavUl>
     </Navbar>
-    <slot />
+    <slot/>
     <Footer class="fixed inset-x-0 bottom-0 pb-2 bg-black">
         <div class="w-5/12 h-16 rounded mx-auto bg-red-600 p-1 flex flex-row justify-between place-items-center">
             <div class="w-32 flex flex-row justify-between py-1 pr-4 border-r-2 border-slate-600">
@@ -47,14 +52,14 @@
                 </svg>
                 <PauseSolid
                         class="w-6 h-6 text-yellow-300 self-center cursor-pointer hover:text-yellow-200 hover:shadow-black"/>
-                <PlaySolid
-                        class="w-6 h-6 text-mint-600 self-center cursor-pointer hover:text-mint-200 hover:shadow-black"/>
+                <PlaySolid on:click={() => startTimer}
+                           class="w-6 h-6 text-mint-600 self-center cursor-pointer hover:text-mint-200 hover:shadow-black"/>
             </div>
             <div class="text-white font-bold">
-                Test Test Test Test
+                {timerTitle || "No Task Selected"}
             </div>
             <div class="w-32 border-l-2 border-slate-600 pl-5 text-white font-bold">
-                1H 30M
+                {timerDisplay || "Test"}
             </div>
         </div>
 
