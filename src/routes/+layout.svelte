@@ -28,12 +28,12 @@
         <NavHamburger on:click={toggle} menuClass="bg-red-400 mx-2"/>
         <NavUl {hidden}>
             <NavLi href="./" on:click={toggle}>
-                <Button outline={window.location.pathname !== "/"} color="blue" class="text-white">
+                <Button outline={window.location.pathname !== "./"} color="blue" class="text-white">
                     Current Tasks
                 </Button>
             </NavLi>
             <NavLi href="./completed" on:click={toggle}>
-                <Button color="green" outline={window.location.pathname !== "/completed"} class="text-white hidden md:block">
+                <Button color="green" outline={window.location.pathname !== "./completed"} class="text-white hidden md:block">
                     Completed
                 </Button>
                 <Button color="green" class="text-white md:hidden">
