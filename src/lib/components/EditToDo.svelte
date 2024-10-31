@@ -25,13 +25,13 @@
             completed: false
         };
 
+        $modalStore.open = false;
         if (mode === 'create') {
             todosStore.addTodo(todo);
         } else {
             todosStore.updateTodo(id, todo);
         }
 
-        $modalStore.open = false;
     };
 </script>
 <form on:submit|preventDefault={submit}>

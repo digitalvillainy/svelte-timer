@@ -12,8 +12,8 @@
 
     const editModal = (): void => {
         $modalStore.open = true;
-        $modalStore.mode = 'edit';
         $modalStore.props = {
+            mode: 'edit',
             id,
             title,
             description

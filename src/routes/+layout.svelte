@@ -4,13 +4,16 @@
     import ReusableModal from "$lib/components/ReusableModal.svelte";
     import {ClockOutline, PlusSolid} from "flowbite-svelte-icons";
     import {modalStore} from "$lib/stores/modal";
+    import {todosStore} from "$lib/stores/todo";
 
     const createTask = (): void => {
         $modalStore.open = true;
         $modalStore.title = "Create Task";
         $modalStore.mode = 'create';
         if ($modalStore.props) {
-            $modalStore.props = {};
+            $modalStore.props = {
+                id: $todosStore.length + 1,
+            };
         }
     };
 

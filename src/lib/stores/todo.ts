@@ -30,10 +30,10 @@ const createTodoStore = (): TodoStore => {
     } = writable<Todo[]>(getTodoFromLocalStorage(),
         () => {
             autoFillStore(todosStore, '/todos')
-            subscribe((todos) => {
+            subscribe((todos: Todo[]): void => {
                 localStorage.setItem('todos', JSON.stringify(todos))
             });
-            return () => {
+            return (): void => {
             }
         }
     );
@@ -44,8 +44,7 @@ const createTodoStore = (): TodoStore => {
     const addTodo = async (todo: Todo): Promise<void> => {
         update((todos: Todo[]) => [...todos, todo]);
 
-        const todos: Todo[] = get(todosStore).filter((todo: Todo): boolean => todo.id === 0);
-        await api.post('/todos', todos);
+        await api.post('/todos', todo);
     };
 
     const updateTodo = async (id: number, updatedTodo: Partial<Todo>): Promise<void> => {
@@ -55,9 +54,7 @@ const createTodoStore = (): TodoStore => {
             )
         );
 
-        await api.put('/todos', updatedTodo)
-            .then((res) => console.log(res))
-            .catch((err) => console.error(err));
+        await api.put('/todos', updatedTodo);
     };
 
     const removeTodo = async (id: number): Promise<void> => {
