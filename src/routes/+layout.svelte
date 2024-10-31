@@ -8,6 +8,7 @@
     const createTask = (): void => {
         $modalStore.open = true;
         $modalStore.title = "Create Task";
+        $modalStore.mode = 'create';
         if ($modalStore.props) {
             $modalStore.props = {};
         }

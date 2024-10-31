@@ -14,6 +14,7 @@
     export let title: string = '';
     export let description: string = '';
     export let id: number = 0;
+    export let mode = 'create';
 
     const submit = (): void => {
 
@@ -24,7 +25,7 @@
             completed: false
         };
 
-        if (title.length === 0 && description.length === 0) {
+        if (mode === 'create') {
             todosStore.addTodo(todo);
         } else {
             todosStore.updateTodo(id, todo);

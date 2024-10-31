@@ -12,6 +12,7 @@
 
     const editModal = (): void => {
         $modalStore.open = true;
+        $modalStore.mode = 'edit';
         $modalStore.props = {
             id,
             title,
@@ -31,6 +32,7 @@
             completed: !completed
         });
     };
+
     $: completedTaskBorder = completed ? 'bg-green-900 border-green-500' : 'bg-slate-800 border-gray-500';
     $: completedTaskText = completed ? 'text-green-300 border-green-500' : 'text-white border-gray-500';
     $: completedTaskIcon = completed ? 'text-green-300' : 'text-gray-300';

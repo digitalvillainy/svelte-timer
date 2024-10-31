@@ -17,22 +17,35 @@ type TodoStore = Writable<Todo[]> & {
     getCompleted: () => Todo[] | undefined
 }
 
+const getTodoFromLocalStorage = (): Todo[] => {
+    if (typeof window === 'undefined') return [];
+    const storedTodos = localStorage.getItem('todos');
+    return storedTodos ? JSON.parse(storedTodos) : [];
+}
 const createTodoStore = (): TodoStore => {
     const {
         subscribe,
         set,
         update
-    } = writable<Todo[]>([],
-        () => autoFillStore(todosStore, '/todos')
+    } = writable<Todo[]>(getTodoFromLocalStorage(),
+        () => {
+            autoFillStore(todosStore, '/todos')
+            subscribe((todos) => {
+                localStorage.setItem('todos', JSON.stringify(todos))
+            });
+            return () => {
+            }
+        }
     );
+
+    //Listen for changes to the store and persist them to localStorage
+    // subscribe((todos: Todo[]): void => localStorage.setItem('todos', JSON.stringify(todos)));
 
     const addTodo = async (todo: Todo): Promise<void> => {
         update((todos: Todo[]) => [...todos, todo]);
 
         const todos: Todo[] = get(todosStore).filter((todo: Todo): boolean => todo.id === 0);
-        await api.post('/todos', todos)
-            .then((res) => console.log(res))
-            .catch((err) => console.error(err));
+        await api.post('/todos', todos);
     };
 
     const updateTodo = async (id: number, updatedTodo: Partial<Todo>): Promise<void> => {
