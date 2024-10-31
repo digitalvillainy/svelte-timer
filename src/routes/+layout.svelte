@@ -25,7 +25,7 @@
             <ClockOutline class="w-12 h-12 fill-red-600 mr-4"/>
             <span class="text-white text-3xl font-bold">Svelte Time</span>
         </NavBrand>
-        <NavHamburger on:click={toggle}/>
+        <NavHamburger on:click={toggle} menuClass="bg-red-400 mx-2"/>
         <NavUl {hidden}>
             <NavLi href="/" on:click={toggle}>
                 <Button outline={window.location.pathname !== "/"} color="blue" class="text-white">
@@ -33,7 +33,10 @@
                 </Button>
             </NavLi>
             <NavLi href="/completed" on:click={toggle}>
-                <Button color="green" outline={window.location.pathname !== "/completed"} class="text-white">
+                <Button color="green" outline={window.location.pathname !== "/completed"} class="text-white hidden md:block">
+                    Completed
+                </Button>
+                <Button color="green" class="text-white md:hidden">
                     Completed
                 </Button>
             </NavLi>
