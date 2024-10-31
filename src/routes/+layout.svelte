@@ -17,7 +17,6 @@
         }
     };
 
-$:console.log(window.location.pathname)
 </script>
 <div>
     <Navbar class="fixed top-0 z-10 w-full bg-black" let:hidden let:toggle>
