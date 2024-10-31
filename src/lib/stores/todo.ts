@@ -22,6 +22,7 @@ const getTodoFromLocalStorage = (): Todo[] => {
     const storedTodos = localStorage.getItem('todos');
     return storedTodos ? JSON.parse(storedTodos) : [];
 }
+
 const createTodoStore = (): TodoStore => {
     const {
         subscribe,
@@ -30,6 +31,7 @@ const createTodoStore = (): TodoStore => {
     } = writable<Todo[]>(getTodoFromLocalStorage(),
         () => {
             autoFillStore(todosStore, '/todos')
+            //Listen for changes to the store and persist them to localStorage
             subscribe((todos: Todo[]): void => {
                 localStorage.setItem('todos', JSON.stringify(todos))
             });
@@ -37,9 +39,6 @@ const createTodoStore = (): TodoStore => {
             }
         }
     );
-
-    //Listen for changes to the store and persist them to localStorage
-    // subscribe((todos: Todo[]): void => localStorage.setItem('todos', JSON.stringify(todos)));
 
     const addTodo = async (todo: Todo): Promise<void> => {
         update((todos: Todo[]) => [...todos, todo]);
@@ -76,6 +75,16 @@ const createTodoStore = (): TodoStore => {
         await updateTodo(id, todo);
     };
 
+    const syncDbWithLocal = async (): Promise<void> => {
+        const todos: Todo[] = await api.get('/todos');
+        const local: Todo[] = JSON.parse(localStorage.getItem('todos') ?? '[]');
+        if (local.length < todos.length) {
+            const newTodos: Todo[] = todos
+                .filter((todo: Todo) => !local.some((localTodo: Todo): boolean => localTodo.id === todo.id));
+            await api.post('/todos', newTodos)
+                .then(() => update((todos: Todo[]) => [...todos, ...newTodos]))
+        }
+    };
 
     return {
         subscribe,
