@@ -7,7 +7,8 @@ Quick start for a svelte PWA powered by flowbite
 
 ### Preview
 
-[visit @ github pages](https://sroehrl.github.io/svelte-flowbite-boilerplate)
+Visit the github page for the app:
+[visit @ github pages](https://digitalvillainy.github.io/svelte-timer)
 
 ### includes
 - typescript
