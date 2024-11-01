@@ -16,7 +16,7 @@
   ],
   "background_color": "#546dd2",
   "display": "standalone",
-  "scope": "/svelte-flowbite-boilerplate/",
+  "scope": "/svelte-timer/",
   "theme_color": "#546dd2",
   "shortcuts": [],
   "description": "A todo list built with Svelte-flowbite-boilerplate"
