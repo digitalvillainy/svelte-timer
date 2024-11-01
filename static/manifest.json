@@ -1,7 +1,7 @@
 {
-  "short_name": "retech-app",
-  "name": "CELEST retech boilerplate app",
-  "start_url": "localhost:5173",
+  "short_name": "svelte-timer",
+  "name": "Svelte Timer",
+  "start_url": "/svelte-timer/",
   "icons": [
     {
       "src": "icon-512x512.png",
@@ -19,5 +19,5 @@
   "scope": "/svelte-flowbite-boilerplate/",
   "theme_color": "#546dd2",
   "shortcuts": [],
-  "description": "Edit this information in static/maifest.json"
+  "description": "A todo list built with Svelte-flowbite-boilerplate"
 }
